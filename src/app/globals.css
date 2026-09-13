@@ -1,0 +1,197 @@
+@import "tailwindcss";
+
+:root {
+  --color-page: #efe7e4;
+  --color-bg: #fbf1ec;
+  --color-text: #2e1f26;
+  --color-accent: #c8547b;
+  --color-accent-700: #9e3d5e;
+  --color-accent-200: #f6d3de;
+  --color-accent-2: #8da07c;
+
+  --color-muted: #6b5d58;
+  --color-muted-2: #8a7b75;
+  --color-muted-3: #a89791;
+  --color-border: #ebddd6;
+  --color-border-2: #d9c6be;
+  --color-border-3: #e0d0c8;
+  --color-card-alt: #f4e8e2;
+  --color-card-alt-2: #f7efea;
+  --color-dark: #2e1f26;
+  --color-dark-2: #3c2a31;
+}
+
+@theme inline {
+  --color-page: var(--color-page);
+  --color-bg: var(--color-bg);
+  --color-text: var(--color-text);
+  --color-accent: var(--color-accent);
+  --color-accent-700: var(--color-accent-700);
+  --color-accent-200: var(--color-accent-200);
+  --color-accent-2: var(--color-accent-2);
+  --color-muted: var(--color-muted);
+  --color-muted-2: var(--color-muted-2);
+  --color-muted-3: var(--color-muted-3);
+  --color-border: var(--color-border);
+  --color-border-2: var(--color-border-2);
+  --color-border-3: var(--color-border-3);
+  --color-card-alt: var(--color-card-alt);
+  --color-card-alt-2: var(--color-card-alt-2);
+  --color-dark: var(--color-dark);
+  --color-dark-2: var(--color-dark-2);
+  --font-display: var(--font-caprasimo);
+  --font-body: var(--font-figtree);
+}
+
+@layer base {
+  body {
+    background: var(--color-page);
+    color: var(--color-text);
+    font-family: var(--font-figtree), system-ui, sans-serif;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  ::selection {
+    background: var(--color-accent-200);
+  }
+}
+
+@layer components {
+  .font-display {
+    font-family: var(--font-caprasimo), serif;
+    font-weight: 400;
+  }
+
+  .input {
+    height: 48px;
+    border-radius: 999px;
+    border: 1.5px solid var(--color-border-2);
+    background: #fff;
+    padding: 0 20px;
+    font-size: 15px;
+    outline: none;
+    width: 100%;
+  }
+
+  .admin-input {
+    height: 46px;
+    border-radius: 999px;
+    border: 1.5px solid var(--color-border-2);
+    background: var(--color-bg);
+    padding: 0 20px;
+    font-size: 15px;
+    color: var(--color-text);
+    outline: none;
+    width: 100%;
+  }
+
+  /* Buttons: darken + lift on hover, press in on click. */
+  .btn-interactive {
+    transition:
+      transform 180ms ease,
+      filter 180ms ease,
+      box-shadow 180ms ease;
+  }
+  .btn-interactive:hover {
+    filter: brightness(0.93);
+    transform: translateY(-2px);
+  }
+  .btn-interactive:active {
+    transform: translateY(0) scale(0.96);
+    filter: brightness(0.88);
+  }
+
+  .hero-float-a {
+    animation: hero-float-a 8s ease-in-out infinite;
+  }
+  .hero-float-b {
+    animation: hero-float-b 9s ease-in-out infinite;
+  }
+  .hero-float-c {
+    animation: hero-float-c 7s ease-in-out infinite;
+  }
+
+  .admin-row-enter {
+    animation: admin-row-enter 380ms ease-out both;
+  }
+
+  .status-dot-pulse {
+    animation: status-dot-pulse 1.8s ease-in-out infinite;
+  }
+}
+
+@keyframes hero-float-a {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-6deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(-3.5deg);
+  }
+}
+
+@keyframes hero-float-b {
+  0%,
+  100% {
+    transform: translateY(0) rotate(4deg);
+  }
+  50% {
+    transform: translateY(-18px) rotate(6.5deg);
+  }
+}
+
+@keyframes hero-float-c {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(-4.5deg);
+  }
+}
+
+@keyframes admin-row-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes status-dot-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(141, 160, 124, 0.55);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgba(141, 160, 124, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-float-a,
+  .hero-float-b,
+  .hero-float-c,
+  .admin-row-enter,
+  .status-dot-pulse {
+    animation: none !important;
+  }
+  .btn-interactive,
+  .btn-interactive:hover,
+  .btn-interactive:active {
+    transition: none !important;
+    transform: none !important;
+  }
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

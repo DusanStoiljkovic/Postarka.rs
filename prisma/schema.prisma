@@ -1,0 +1,106 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  slug        String   @unique
+  kind        String // "postcard" | "package"
+  title       String
+  titleEn     String?
+  description String?
+  descriptionEn String?
+  type        String? // "unikat" | "serija" (postcards only)
+  theme       String? // "Životinje" | "Hrana" | "Priroda" | "Praznici" | "Bajke"
+  price       Int
+  stock       Int      @default(0)
+  edition     Int? // total edition size, e.g. 30 (postcards only)
+  status      String   @default("stanju") // "stanju" | "rasprodato" | "skriveno"
+  image       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  orderItems OrderItem[]
+}
+
+model Order {
+  id          Int      @id @default(autoincrement())
+  name        String
+  email       String
+  phone       String?
+  street      String
+  postalCode  String
+  city        String
+  country     String
+  sendToRecipient Boolean @default(false)
+  note        String?
+  paymentMethod String // "uplatnica" | "pouzece" | "paypal" | "wise" | "iban" | "instagram"
+  itemsTotal  Int
+  shipping    Int
+  discount    Int      @default(0)
+  total       Int
+  status      String   @default("na_cekanju") // "na_cekanju" | "placeno" | "poslato" | "otkazano"
+  createdAt   DateTime @default(now())
+
+  items OrderItem[]
+}
+
+model OrderItem {
+  id        Int     @id @default(autoincrement())
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId   Int
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int
+  title     String
+  price     Int
+  quantity  Int
+}
+
+model ContactMessage {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  topic     String
+  message   String
+  createdAt DateTime @default(now())
+}
+
+model BlogPost {
+  id          Int      @id @default(autoincrement())
+  slug        String   @unique
+  tag         String?
+  title       String
+  titleEn     String?
+  excerpt     String?
+  excerptEn   String?
+  content     String?
+  contentEn   String?
+  image       String
+  status      String   @default("objavljeno") // "objavljeno" | "skriveno"
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model AboutContent {
+  id              Int      @id @default(autoincrement())
+  portraitImage   String?
+  atelje1Image    String?
+  atelje2Image    String?
+  paragraph1      String?
+  paragraph1En    String?
+  paragraph2      String?
+  paragraph2En    String?
+  wholesaleText   String?
+  wholesaleTextEn String?
+  updatedAt       DateTime @updatedAt
+}
