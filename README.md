@@ -31,11 +31,6 @@ npx prisma db seed    # load the 13 postcards + 2 Postcrossing packages from the
 - `/admin` — password-gated product management (add/adjust stock/cycle status/delete)
 - `/admin/porudzbine` — order list with status updates
 
-## Admin login
-
-Default password is `postarka2026` (see `ADMIN_PASSWORD` in `.env`). Change it before any
-real deployment, along with `ADMIN_SESSION_SECRET`.
-
 ## Checkout payment rules
 
 Implemented per the design chat: bank transfer ("uplatnica") is always available domestically;
